@@ -15,9 +15,9 @@ namespace UmbracoAOP.EventSubscriber
         /// </summary>
         /// <param name="attributeTypes"></param>
         /// <returns></returns>
-        public static AttributeToMethodList GetMethodsWithAttribute(params Type[] attributeTypes)
+        public static List<AttributeToMethod> GetMethodsWithAttribute(Type attributeType)
         {
-            var results = new AttributeToMethodList();
+            var results = new List<AttributeToMethod>();
 
             var assemblies = AppDomain.CurrentDomain.GetAssemblies().ToArray();
             
@@ -29,13 +29,10 @@ namespace UmbracoAOP.EventSubscriber
                                             from method in type.GetMethods()
                                             select method)
                     {
-                        foreach (var attributeType in attributeTypes)
+                        if (Attribute.IsDefined(method, attributeType))
                         {
-                            if (Attribute.IsDefined(method, attributeType))
-                            {
-                                var attrInstance = method.GetCustomAttribute(attributeType, false);
-                                results.Add(attrInstance, method);
-                            }
+                            var attrInstance = method.GetCustomAttribute(attributeType, false);
+                            results.Add(new AttributeToMethod(attrInstance, method));
                         }
                     }
                 }

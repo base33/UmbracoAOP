@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using UmbracoAOP.EventSubscriber;
-using UmbracoAOP.EventSubscriber.Attributes;
-using UmbracoAOP.EventSubscriber.Attributes.ContentEvents;
+using UmbracoAOP.EventSubscriber.Binders;
+using UmbracoAOP.EventSubscriber.Binders.ContentEvents;
 using umbraco.cms.businesslogic;
 using umbraco.cms.businesslogic.web;
 using Umbraco.Core;
 using System.Diagnostics;
 using Umbraco.Core.Services;
+using System.Reflection;
 
 namespace UmbracoAOP.EventSubscriber
 {
@@ -25,15 +26,16 @@ namespace UmbracoAOP.EventSubscriber
             var sw = new Stopwatch();
             sw.Start();
 
-            var umbracoEventsProvider = new UmbracoEventAttributeProvider();
-            Type[] eventAttributes = umbracoEventsProvider.Get();
-
             //bind attributes that require no values
-            AttributeToMethodList methodAttrMapping = ReflectionHelper.GetMethodsWithAttribute(eventAttributes);
-            foreach (var attrMapping in methodAttrMapping)
+            var attributeToMethodList = ReflectionHelper.GetMethodsWithAttribute(typeof(UmbracoEventAttribute));
+
+            var eventBindingsLookup = new EventBindingsLookup();
+
+            foreach (var attributeToMethod in attributeToMethodList)
             {
-                var binder = (IBindToEvent) attrMapping.Key;
-                binder.Bind(attrMapping.Value);
+                var eventBinder = eventBindingsLookup.LookUpValidEventBinder(attributeToMethod.MethodInfo);
+                eventBinder.Bind(((UmbracoEventAttribute)attributeToMethod.Attribute).ContentTypeAliases,
+                    new MethodInfo[] { attributeToMethod.MethodInfo });
             }
 
             sw.Stop();
