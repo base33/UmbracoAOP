@@ -209,18 +209,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AttributeToMethod.cs" />
-    <Compile Include="Binders\ContentEvents\ContentEventBase.cs" />
-    <Compile Include="Binders\ContentEvents\Copied.cs" />
-    <Compile Include="Binders\ContentEvents\Copying.cs" />
-    <Compile Include="Binders\ContentEvents\Saved.cs" />
-    <Compile Include="Binders\ContentEvents\Saving.cs" />
-    <Compile Include="Binders\IEventBinder.cs" />
-    <Compile Include="Binders\IEventValidator.cs" />
+    <Compile Include="Binders\ContentEvents\ContentEventBinder.cs" />
+    <Compile Include="Binders\ContentEvents\EventValidatorMappings.cs" />
+    <Compile Include="Binders\ContentEvents\EventValidators.cs" />
     <Compile Include="EventBinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReflectionHelper.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Binders\EventBindingsLookup.cs" />
+    <Compile Include="TypeSwitch.cs" />
     <Compile Include="UmbracoEventAttribute.cs" />
   </ItemGroup>
   <ItemGroup>

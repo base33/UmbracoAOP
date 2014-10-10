@@ -29,13 +29,14 @@ namespace UmbracoAOP.EventSubscriber
             //bind attributes that require no values
             var attributeToMethodList = ReflectionHelper.GetMethodsWithAttribute(typeof(UmbracoEventAttribute));
 
+
             var eventBindingsLookup = new EventBindingsLookup();
 
             foreach (var attributeToMethod in attributeToMethodList)
             {
                 var eventBinder = eventBindingsLookup.LookUpValidEventBinder(attributeToMethod.MethodInfo);
-                eventBinder.Bind(((UmbracoEventAttribute)attributeToMethod.Attribute).ContentTypeAliases,
-                    new MethodInfo[] { attributeToMethod.MethodInfo });
+                if (eventBinder != null)
+                    eventBinder(attributeToMethod.MethodInfo, (UmbracoEventAttribute)attributeToMethod.Attribute);
             }
 
             sw.Stop();
