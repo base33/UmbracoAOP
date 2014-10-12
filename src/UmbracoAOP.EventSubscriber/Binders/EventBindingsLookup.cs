@@ -22,11 +22,11 @@ namespace UmbracoAOP.EventSubscriber.Binders
             {
 
                 //resolve whether this is a content event, media or other
-                if (parameters[0].ParameterType == typeof(IContentService) || 
+                if (parameters[0].ParameterType == typeof(IContentService) ||
                     parameters[0].ParameterType == typeof(IPublishingStrategy))
                     return lookUpValidEventBinderList(ContentEvents.EventValidatorMappings.Mappings, methodInfo, parameters);
                 else if (parameters[0].ParameterType == typeof(IMediaService))
-                    return null;
+                    return lookUpValidEventBinderList(MediaEvents.EventValidatorMappings.Mappings, methodInfo, parameters);
                 else if (parameters[0].ParameterType == typeof(IContentTypeService))
                     return null;
                 

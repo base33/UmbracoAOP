@@ -1,0 +1,3 @@
+Here are the credentials for the sandbox:
+Username: admin
+Password: events
