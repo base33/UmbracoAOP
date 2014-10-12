@@ -249,12 +249,6 @@
     </None>
     <Content Include="xslt\Web.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\UmbracoAOP.EventSubscriber\UmbracoAOP.EventSubscriber.csproj">
-      <Project>{eb0b512d-2488-44e9-b45a-b0b2303f8d3e}</Project>
-      <Name>UmbracoAOP.EventSubscriber</Name>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

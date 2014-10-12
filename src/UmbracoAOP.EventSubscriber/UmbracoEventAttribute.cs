@@ -6,8 +6,8 @@ using System.Web;
 namespace UmbracoAOP.EventSubscriber
 {
     /// <summary>
-    /// Subscribes the method to an Umbraco Event
-    /// Use _ and the event
+    /// Subscribes the method to an Umbraco Event.  
+    /// The method suffix should be the event name
     /// e.g. methodName_Published ( ... )
     /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
@@ -15,9 +15,13 @@ namespace UmbracoAOP.EventSubscriber
     {
         public string[] ContentTypeAliases { get; set; }
 
-        public UmbracoEventAttribute(params string[] contentTypeAliases)
+        /// <summary>
+        /// Filter by target type alias
+        /// </summary>
+        /// <param name="targetTypeAliases"></param>
+        public UmbracoEventAttribute(params string[] targetTypeAliases)
         {
-            ContentTypeAliases = contentTypeAliases;
+            ContentTypeAliases = targetTypeAliases;
         }
     }
 }
